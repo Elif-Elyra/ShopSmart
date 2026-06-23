@@ -11,7 +11,7 @@ router = DefaultRouter()
 # ----------------------------
 
 router.register(
-    r"auth/addresses",
+    r"addresses",
     AddressViewSet,
     basename="addresses"
 )
@@ -78,12 +78,12 @@ urlpatterns = [
     # ----------------------------
 
     path(
-        "auth/profile/",
+        "me/",
         ProfileView.as_view()
     ),
 
     path(
-        "auth/become-seller/",
+        "me/become-seller/",
         BecomeSellerView.as_view()
     ),
 
