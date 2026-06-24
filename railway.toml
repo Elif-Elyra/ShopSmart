@@ -1,5 +1,6 @@
 [build]
-buildCommand = "cd shopsmart && npm install && npm run build && cd .."
+builder = "nixpacks"
+buildCommand = "cd shopsmart && npm install && npm run build && cd .. && pip install poetry && poetry install --no-root --only main"
 
 [deploy]
-startCommand = "gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"
+startCommand = "python manage.py migrate --no-input && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"
