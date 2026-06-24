@@ -1,0 +1,11 @@
+{
+  "steps": {
+    "install-node": {
+      "cmds": ["cd shopsmart && npm install && npm run build"]
+    },
+    "install": {
+      "cmds": ["poetry install --no-interaction --no-ansi --only main --no-root"],
+      "dependsOn": ["install-node"]
+    }
+  }
+}
