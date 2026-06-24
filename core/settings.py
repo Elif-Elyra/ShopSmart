@@ -26,10 +26,21 @@ load_dotenv(BASE_DIR / ".env")
 # =========================
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-change-me")
-DEBUG = os.getenv("DEBUG") == "True"
+# DEBUG = os.getenv("DEBUG") == "True"
 BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+
+# Production security settings
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+
 
 # =========================
 # APPLICATIONS
@@ -84,7 +95,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "shopsmart" / "dist"],
+        "DIRS": [d for d in [BASE_DIR / "shopsmart" / "dist"] if d.exists()],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -137,9 +148,15 @@ USE_TZ = True
 # STATIC & MEDIA
 # =========================
 
+# STATIC & MEDIA
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "shopsmart" / "dist"]
+
+# Sirf tab add karo jab folder exist kare
+STATICFILES_DIRS = []
+dist_dir = BASE_DIR / "shopsmart" / "dist"
+if dist_dir.exists():
+    STATICFILES_DIRS.append(dist_dir)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "mediafiles"
