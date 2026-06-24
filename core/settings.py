@@ -150,17 +150,12 @@ USE_TZ = True
 # STATIC & MEDIA
 # =========================
 
-# STATIC & MEDIA
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-dist_assets = BASE_DIR / "shopsmart" / "dist" / "assets"
-STATICFILES_DIRS = [dist_assets] if dist_assets.exists() else []folder
+STATICFILES_DIRS = [BASE_DIR / "shopsmart" / "dist" / "assets"]  # sirf assets folder
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "mediafiles"
-
-
 
 
 # =========================
