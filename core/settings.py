@@ -8,10 +8,8 @@ from dotenv import load_dotenv
 from datetime import timedelta
 import dj_database_url
 
-# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
-
 
 # =========================
 # SECURITY SETTINGS
@@ -28,7 +26,6 @@ CORS_ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 
-# Production security settings
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
@@ -36,7 +33,6 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
 
 # =========================
 # APPLICATIONS
@@ -49,20 +45,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    # Third party
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
     "corsheaders",
-
-    # Local apps
     "apps.catalog",
     "apps.account",
     "apps.orders",
 ]
-
 
 # =========================
 # MIDDLEWARE
@@ -71,7 +62,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",   # WhiteNoise for static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "core.middleware.LowercaseURLMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -81,10 +72,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "core.urls"
 WSGI_APPLICATION = "core.wsgi.application"
-
 
 # =========================
 # TEMPLATES
@@ -105,12 +94,9 @@ TEMPLATES = [
     },
 ]
 
-
 # =========================
 # DATABASE
 # =========================
-# Railway automatically provides DATABASE_URL env variable for PostgreSQL.
-# Locally it falls back to SQLite.
 
 DATABASES = {
     "default": dj_database_url.config(
@@ -119,7 +105,6 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
-
 
 # =========================
 # AUTH
@@ -134,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
 # =========================
 # INTERNATIONALIZATION
 # =========================
@@ -144,28 +128,21 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-
 # =========================
 # STATIC & MEDIA
 # =========================
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Vue.js built files bhi static mein include honge
 STATICFILES_DIRS = []
-vue_dist = BASE_DIR / "shopsmart" / "dist"
-if vue_dist.exists():
-    STATICFILES_DIRS = [vue_dist]
 
-# WhiteNoise — compressed static files serve karta hai bina nginx ke
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# WhiteNoise — simple storage (Manifest version staticfiles folder require karti hai)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 # =========================
 # REST FRAMEWORK
@@ -182,7 +159,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 # =========================
 # SIMPLE JWT
 # =========================
@@ -194,7 +170,6 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
 }
-
 
 # =========================
 # EXTERNAL SERVICES

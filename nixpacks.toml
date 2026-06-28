@@ -4,8 +4,6 @@ nixPkgs = ["python313", "poetry"]
 [phases.install]
 cmds = [
     "poetry config virtualenvs.create false",
-    "poetry install --no-root --no-interaction"
+    "poetry install --no-root --no-interaction",
+    "mkdir -p staticfiles"
 ]
-
-[start]
-cmd = "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
