@@ -27,25 +27,45 @@ node_modules/
 
 
 # ========= BACKEND ========
+
+
+# Environment
+.env
+*.env
+
 # Python
 __pycache__/
 *.py[cod]
-*.sqlite3
-venv/
-.env
+*.pyo
+*.pyd
+.Python
+*.so
 
 # Django
-media/
+db.sqlite3
+db.sqlite3-journal
 staticfiles/
+mediafiles/
 
-# Vue
-frontend/node_modules/
+# Poetry
+.venv/
+venv/
+dist/
+*.egg-info/
 
+# Node / Vue frontend
+shopsmart/node_modules/
+shopsmart/dist/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
