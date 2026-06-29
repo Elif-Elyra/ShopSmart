@@ -1,9 +1,8 @@
 [phases.setup]
-nixPkgs = ["python313", "poetry"]
+nixPkgs = ["python313"]
 
 [phases.install]
-cmds = [
-    "poetry config virtualenvs.create false",
-    "poetry install --no-root --no-interaction",
-    "mkdir -p staticfiles"
-]
+cmds = ["pip install poetry", "poetry install --no-root"]
+
+[start]
+cmd = "python3.13 manage.py migrate --noinput && gunicorn shopsmart.wsgi:application --bind 0.0.0.0:$PORT"
