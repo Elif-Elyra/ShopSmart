@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["python313"]
+nixPkgs = ["python313", "python313Packages.pip", "poetry"]
 
 [phases.install]
 cmds = ["pip install poetry", "poetry install --no-root"]
