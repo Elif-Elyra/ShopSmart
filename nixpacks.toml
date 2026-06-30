@@ -1,9 +1,15 @@
- # force rebuild
+# force rebuild
 [phases.setup]
-nixPkgs = ["python313", "python313Packages.pip", "poetry"]
+nixPkgs = ["python313", "python313Packages.pip", "poetry", "nodejs_20"]
 
 [phases.install]
-cmds = ["poetry install --no-root"]
+cmds = [
+  "poetry install --no-root",
+  "cd shopsmart && npm install && npm run build"
+]
 
 [start]
 cmd = "poetry run python manage.py migrate --noinput && poetry run gunicorn shopsmart.wsgi:application --bind 0.0.0.0:$PORT"
+
+[phases.build]
+cmds = ["poetry run python manage.py collectstatic --noinput"]
