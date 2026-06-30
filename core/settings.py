@@ -138,6 +138,9 @@ STATICFILES_DIRS = [BASE_DIR / "shopsmart" / "dist"]
 
 # WhiteNoise — simple storage (Manifest version staticfiles folder require karti hai)
 
+
+
+
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
