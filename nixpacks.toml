@@ -2,7 +2,7 @@
 nixPkgs = ["python313", "python313Packages.pip", "poetry"]
 
 [phases.install]
-cmds = ["pip install poetry", "poetry install --no-root"]
+cmds = ["poetry install --no-root"]
 
 [start]
 cmd = "python3.13 manage.py migrate --noinput && gunicorn shopsmart.wsgi:application --bind 0.0.0.0:$PORT"
