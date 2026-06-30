@@ -1,6 +1,6 @@
 # force rebuild
 [phases.setup]
-nixPkgs = ["python313", "python313Packages.pip", "poetry", "nodejs_20"]
+nixPkgs = ["python313", "python313Packages.pip", "poetry", "nodejs_22"]
 
 [phases.install]
 cmds = [
