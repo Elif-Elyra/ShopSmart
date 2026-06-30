@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["python313", "python313Packages.pip", "poetry", "nodejs_24"]
+nixPkgs = ["python313", "python313Packages.pip", "poetry", "nodejs_22"]
 
 [phases.install]
 cmds = [
