@@ -1,3 +1,4 @@
+# force rebuild v2
 [phases.setup]
 nixPkgs = ["python313", "python313Packages.pip", "poetry", "nodejs_22"]
 
