@@ -134,12 +134,14 @@ const getImageUrl = (path) => {
     return "";
   }
 
-  // return path.startsWith("http") ? path : `http://127.0.0.1:8000${path}`;
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  return path.startsWith("http") ? path : `${BASE_URL}${path}`;
 
-  const imageUrl = path.startsWith("http")
-    ? path
-    : `${BASE_URL.replace(/\/api\/?$/, "")}${path}`;
+  // return path.startsWith("http") ? path : `http://127.0.0.1:8000${path}`;
+
+  // const imageUrl = path.startsWith("http")
+  //   ? path
+  //   : `${BASE_URL.replace(/\/api\/?$/, "")}${path}`;
 };
 
 defineProps({
