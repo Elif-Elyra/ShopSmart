@@ -19,18 +19,13 @@ from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
-
-# Naya import
-from django.utils.decorators import decorator_from_middleware
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 
 
+@method_decorator(never_cache, name="get")
 class IndexView(TemplateView):
     template_name = "index.html"
-
-    @never_cache
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
 
 
 urlpatterns = [
