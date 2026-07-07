@@ -20,6 +20,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 BASE_URL = os.getenv("BASE_URL", "http://127.0.0.1:8000")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173").split(",")
@@ -27,7 +28,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "False") == "True"
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
