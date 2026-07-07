@@ -20,21 +20,32 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Naya import
+from django.utils.decorators import decorator_from_middleware
+from django.views.decorators.cache import never_cache
+
+
+class IndexView(TemplateView):
+    template_name = "index.html"
+
+    @never_cache
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
     path("api/", include("rest_framework.urls")),
     path('api/', include('apps.catalog.urls')),
     path('api/', include('apps.account.urls')),
     path('api/', include('apps.orders.urls'))
-    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
     re_path(
-    r"^(?!api/|static/|media/).*$",
-    TemplateView.as_view(template_name="index.html"),
-),
+        r"^(?!api/|static/|media/).*$",
+        IndexView.as_view(),
+    ),
 ]
