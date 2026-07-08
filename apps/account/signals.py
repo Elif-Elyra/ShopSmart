@@ -22,16 +22,14 @@ from .views import generate_otp, send_otp_email
 
 @receiver(post_save, sender=User)
 def send_otp_on_register(sender, instance, created, **kwargs):
-
-    # Sirf naye user ke liye chale, aur jo abhi active nahi hai
     if created and not instance.is_active:
-
-        # OTP generate karke database mein save karo
         otp_code = generate_otp()
         OTP.objects.create(
             email=instance.email,
             code=otp_code
         )
 
-        # Email bhejo
-        send_otp_email(instance.email, otp_code)
+        # Email fail ho to bhi registration crash na ho
+        result = send_otp_email(instance.email, otp_code)
+        if not result.get("success"):
+            print(f"[OTP Email Failed] {instance.email}: {result.get('error')}")

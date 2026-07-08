@@ -226,7 +226,7 @@ async function handleRegister() {
   errors.value = {};
 
   if (password.value !== confirmPassword.value) {
-    errors.value.general = err.detail || "Passwords do not match";
+    errors.value.general = "Passwords do not match";
     return;
   }
 

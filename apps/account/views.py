@@ -40,7 +40,6 @@ def generate_otp():
 # SendGrid se OTP email bhejo
 # Yeh function external API (SendGrid) se baat karta hai
 # ============================================================
-
 def send_otp_email(email, otp):
     url = "https://api.sendgrid.com/v3/mail/send"
 
@@ -70,8 +69,17 @@ def send_otp_email(email, otp):
 
     except requests.exceptions.Timeout:
         return {"success": False, "error": "timeout"}
-
-
+    except requests.exceptions.RequestException as e:
+        # Koi bhi doosra network/HTTP error yahan catch ho jayega
+        # (401, 403, connection error, etc.)
+        error_detail = None
+        if e.response is not None:
+            error_detail = e.response.text
+        print(f"[SendGrid Error] {e} | Response: {error_detail}")
+        return {"success": False, "error": str(e)}
+    
+    
+    
 # ============================================================
 # REGISTER
 # User save hone ke baad signal automatically OTP bhejega.
