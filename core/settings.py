@@ -179,6 +179,7 @@ SIMPLE_JWT = {
 # =========================
 # EXTERNAL SERVICES
 # =========================
+BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "noreply@shopsmart.com")

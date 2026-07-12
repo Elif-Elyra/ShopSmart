@@ -46,44 +46,37 @@ logger = logging.getLogger(__name__)
 
 
 def send_otp_email(email, otp):
-    url = "https://api.sendgrid.com/v3/mail/send"
+    url = "https://api.brevo.com/v3/smtp/email"
 
     payload = {
-        "personalizations": [{
-            "to": [{"email": email}],
-            "subject": "Your OTP Code"
-        }],
-        "from": {
+        "sender": {
+            "name": "ShopSmart",
             "email": settings.DEFAULT_FROM_EMAIL
         },
-        "content": [{
-            "type": "text/html",
-            "value": f"Your OTP is: {otp}"
-        }]
+        "to": [{"email": email}],
+        "subject": "Your OTP Code",
+        "htmlContent": f"<p>Your OTP is: <strong>{otp}</strong></p>"
     }
 
     headers = {
-        "Authorization": f"Bearer {settings.SENDGRID_API_KEY}",
+        "api-key": settings.BREVO_API_KEY,
         "Content-Type": "application/json"
     }
 
     try:
         response = requests.post(url, json=payload, headers=headers, timeout=5)
-
-        # YAHAN LOG KARO — chahe success ho ya fail, hamesha print/log karo
-        print(f"[SENDGRID] Status: {response.status_code} | Body: {response.text}")
-
+        print(f"[BREVO] Status: {response.status_code} | Body: {response.text}")
         response.raise_for_status()
         return {"success": True, "status": response.status_code}
 
     except requests.exceptions.Timeout:
-        print("[SENDGRID] Timeout error")
+        print("[BREVO] Timeout error")
         return {"success": False, "error": "timeout"}
 
     except requests.exceptions.RequestException as e:
         error_body = e.response.text if e.response is not None else "No response body"
-        print(f"[SENDGRID ERROR] {e} | Response body: {error_body}")
-        return {"success": False, "error": str(e)}   
+        print(f"[BREVO ERROR] {e} | Response body: {error_body}")
+        return {"success": False, "error": str(e)} 
     
     
 # ============================================================
